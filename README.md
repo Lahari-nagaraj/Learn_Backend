@@ -126,3 +126,93 @@ In Node.js, both `require` and `import` are used to include modules, but they ar
  #### What is dotenv?
 dotenv is a module that loads environment variables from a .env file into process.env.
 To keep sensitive data (API keys, DB credentials) out of your code.
+
+
+### HTTP vs HTTPS
+
+#### What is HTTP?
+
+**HTTP** stands for **HyperText Transfer Protocol**. It is the protocol used to transfer data between a client (browser) and a server.
+
+- It defines **how data is requested and transferred** (e.g., viewing a website).
+- Data is sent in **plain text**, so it can be intercepted.
+ Use HTTP when:
+You're in a local development environment
+
+Testing simple servers without sensitive data
+
+Learning/practicing with no login, payment, or API keys involved
+
+#### What is HTTPS?
+
+**HTTPS** stands for **HyperText Transfer Protocol Secure**. It is the **secure version of HTTP**.
+- **SSL/TLS encryption** to secure communication.
+- **Digital certificates** (issued by Certificate Authorities).
+-  Use HTTPS when:
+Your app deals with user credentials, payments, or private data
+
+You're deploying to production
+
+You're using authentication systems (JWT, OAuth)
+
+You want to prevent man-in-the-middle attacks
+
+#### Major Differences
+
+| Feature          | HTTP                            | HTTPS                                |
+|------------------|----------------------------------|----------------------------------------|
+|  Security       | Not secure (plain text)          | Encrypted (via SSL/TLS)                |
+|  Encryption     |  None                          |  Yes                                 |
+| Authentication |  None                          |  Validates server identity           |
+|  Port           | 80                              | 443                                    |
+|  URL Format     | `http://example.com`            | `https://example.com`                  |
+| Vulnerability   | Prone to data sniffing, MITM    | Safe from man-in-the-middle attacks   |
+|  SEO & Trust     | Not preferred by browsers       | Required for modern browsers (secure padlock ) |
+
+
+#  Request-Response Lifecycle 
+
+1. **Client Sends Request**: A browser or frontend sends an HTTP request to the server with method, URL, headers, and optional body.
+
+2. **Server Receives Request**: Node.js server listens on a port and receives the incoming request.
+
+3. **Middleware Runs** *(Express only)*: Middleware functions process the request (e.g., parsing JSON, logging, authentication).
+
+4. **Route Handler Executes**: Based on the request path and method, the matching handler runs logic and prepares a response.
+
+5. **Response is Sent**: The server sends back status, data, and headers.
+
+6. **Client Receives Response**: The frontend/browser processes the response and updates the UI accordingly.
+
+
+
+
+#### JSON (JavaScript Object Notation)
+- A lightweight format for exchanging data between client and server.
+- Data is structured in key-value pairs.
+- Easy to parse and generate in JavaScript.
+
+Example structure:
+```json
+{ "name": "Lahari", "age": 20 }
+```
+
+ #### HTTP Headers
+Headers are metadata sent with requests and responses.
+
+They describe what’s being sent, how to handle it, and client/server behavior.
+
+##### Common headers:
+
+Content-Type: Format of the data (e.g., application/json)<br>
+Authorization: Carries tokens for secured APIs<br>
+Accept: Specifies expected response format<br>
+
+#### Content-Type
+Tells the server or client what type of data is being sent.<br>
+
+application/json – JSON data<br>
+text/html – HTML content<br>
+application/x-www-form-urlencoded – Form data (e.g., from HTML forms)<br>
+multipart/form-data – Used for file uploads<br>
+
