@@ -169,4 +169,123 @@ For POST/PUT/PATCH, it sends data in JSON format, like:
 | Update a user  | `/users/12` | PUT    | Replaces user with ID 12 |
 | Delete a user  | `/users/12` | DELETE | Deletes that user        |
 
+# Middleware
 
+A middleware is a function in Express that sits in the middle of the request and response cycle. It receives the req (request), res (response), and a next function, and can do things like:
+
+Modify the request or response, End the request–response cycle, Pass control to the next middleware or route
+
+
+ Why Use Middleware?
+For shared logic across routes (e.g., logging, auth)
+
+For parsing data from the request body
+
+For security, validation, and error handling
+
+To add or modify headers
+
+To handle CORS, static files, etc.
+
+### Types
+
+1. Application-Level Middleware<br>
+
+Middleware that applies to all or specific routes using app.use() or app.METHOD().
+
+Syntax:
+```
+app.use((req, res, next) => {
+  console.log("Logging every request");
+  next();
+});
+```
+When to use:
+Logging
+
+Global validation
+
+Authentication checks
+
+Setting common headers
+
+
+ 2. Router-Level Middleware
+
+Same as application-level, but attached to a Router instance instead of app.
+
+ Syntax:
+```
+const router = express.Router();
+
+router.use((req, res, next) => {
+  console.log("Router-level middleware");
+  next();
+});
+```
+When to use:
+Modular route-specific logic
+
+Middleware that applies only to certain grouped routes
+
+
+3. Built-In Middleware
+
+Middleware functions that come with Express.
+
+ Syntax:
+```
+app.use(express.json()); // Parse JSON body
+app.use(express.urlencoded({ extended: true })); // Parse form data
+app.use(express.static('public')); // Serve static files
+```
+When to use:
+To handle form and JSON data<br>
+To serve static CSS, JS, HTML files<br>
+
+ 4. Third-Party Middleware<br>
+    Middleware provided by external npm packages.<br>
+
+ Syntax:
+ ```
+const cors = require('cors');
+app.use(cors());
+
+const morgan = require('morgan');
+app.use(morgan('dev'));
+
+```
+For logging, security, headers, performance, validation
+
+ Popular Libraries:
+Package	-> Purpose
+cors	-> Enable cross-origin requests
+morgan	-> Log requests
+helmet	-> Secure headers
+cookie-parser-> 	Parse cookies
+
+ 5. Error-Handling Middleware
+
+Special middleware that catches errors across your app.<br>
+ Syntax:
+```
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+```
+When to use:
+To handle validation errors<br>
+To catch and respond to unhandled exceptions<br>
+To avoid repeating try-catch in every route<br>
+
+Must include four parameters: (err, req, res, next)
+
+
+| Type              | Method Used           | Use Case                        |
+| ----------------- | --------------------- | ------------------------------- |
+| Application-level | `app.use()`           | Global logic like logging, auth |
+| Router-level      | `router.use()`        | Modular route grouping          |
+| Built-in          | `express.json()` etc. | Parsing, static files           |
+| Third-party       | `app.use(package)`    | Logging, security, validation   |
+| Error-handling    | `app.use((err,...))`  | Centralized error handling      |
