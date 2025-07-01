@@ -289,3 +289,46 @@ Must include four parameters: (err, req, res, next)
 | Built-in          | `express.json()` etc. | Parsing, static files           |
 | Third-party       | `app.use(package)`    | Logging, security, validation   |
 | Error-handling    | `app.use((err,...))`  | Centralized error handling      |
+
+
+ # What is MongoDB?
+A NoSQL database (non-relational)
+Stores data as collections of documents
+Each document is a JSON-like object (called BSON)
+Highly scalable, flexible, and used in modern web apps
+
+Database holds collections just like a table but its not actually in table but in the form of document whuch holds key value pair inside a document known as field. Mongo internally uses Binary JSON format.
+
+# What is Mongoose?
+
+An ODM (Object Data Modeling) library for MongoDB + Node.js
+Allows defining schemas to structure your data
+Adds built-in validation and query features
+
+
+# Defining a Schema
+```
+const mongoose = require('mongoose');
+
+const userSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  age: Number,
+  email: { type: String, unique: true },
+  createdAt: { type: Date, default: Date.now }
+});
+```
+Creating a model - this creats a collection called users we include this in a file with schema
+```
+const User = mongoose.model('User', userSchema);
+```
+| Option       | Use for...                                 |
+| ------------ | ------------------------------------------ |
+| `type`       | Data type of the field                     |
+| `required`   | Make the field mandatory                   |
+| `default`    | Set default value                          |
+| `unique`     | Prevent duplicate entries                  |
+| `min`, `max` | Number limits                              |
+| `enum`       | Accept only certain values (like dropdown) |
+| `validate`   | Custom validation logic                    |
+
+
