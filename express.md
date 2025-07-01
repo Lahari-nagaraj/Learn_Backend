@@ -331,4 +331,61 @@ const User = mongoose.model('User', userSchema);
 | `enum`       | Accept only certain values (like dropdown) |
 | `validate`   | Custom validation logic                    |
 
+## Crud opeation
 
+To Create
+Mode.create(data)
+or
+const doc = new Model(data)
+await doc.save();
+
+Read
+Model.find()
+Model.findOne({key:Value})
+Model.findById(id)
+
+Update
+Model.updateOne({key: value}, {$set: updatedData})
+Model.findByIdAndUpdate(id, updatedData, {new: true})
+
+Delete
+Model.deleteOne({ key: value })
+Model.findByIdAndDelete(id)
+
+### Connecetion string to be added in app.ja or server.js
+```
+require('dotenv').config();
+const mongoose = require('mongoose');
+
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB Atlas connected"))
+  .catch((err) => console.log("Connection error:", err));
+```
+## Mongoose Validation
+
+Mongoose validation ensures that the data stored in MongoDB follows the rules defined in the Mongoose schema. It helps maintain data integrity and consistency.
+
+Validation is triggered before saving or creating a document.
+
+```
+const userSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true, match: /.+\@.+\..+/ },
+  age: { type: Number, min: 18, max: 60 },
+  role: { type: String, enum: ['student', 'admin'] },
+  joinedAt: { type: Date, default: Date.now }
+});
+```
+
+Mongoose validation is triggered while creating a new data and before saving it 
+
+
+| Feature             | Mongoose Validation                   | Joi Validation                           |
+| ------------------- | ------------------------------------- | ---------------------------------------- |
+| Purpose             | Validates data before saving to DB    | Validates **incoming request** data      |
+| Where it runs       | In schema layer (Mongoose model)      | Before controller logic (middleware)     |
+| Usage               | Basic checks like required, min, etc. | Full input validation: complex logic     |
+| Best used for       | Final validation before storing in DB | Input validation at API level            |
+| Flexibility         | Limited (basic validation)            | Highly customizable                      |
+| Error control       | Returns Mongoose-specific errors      | Developer-defined custom errors          |
+| Speed & performance | Slightly slower on massive data sets  | Fast since it runs before DB interaction |
