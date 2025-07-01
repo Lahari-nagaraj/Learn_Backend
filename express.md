@@ -257,12 +257,12 @@ app.use(morgan('dev'));
 ```
 For logging, security, headers, performance, validation
 
- Popular Libraries:
-Package	-> Purpose
-cors	-> Enable cross-origin requests
-morgan	-> Log requests
-helmet	-> Secure headers
-cookie-parser-> 	Parse cookies
+ Popular Libraries:<br>
+Package	-> Purpose<br>
+cors	-> Enable cross-origin requests<br>
+morgan	-> Log requests<br>
+helmet	-> Secure headers<br>
+cookie-parser-> 	Parse cookies<br>
 
  5. Error-Handling Middleware
 
